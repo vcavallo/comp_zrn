@@ -56,57 +56,133 @@ class Puzzle
     words
   end
 
+  # data[row][col]
+
   def get_indexes_in_row(row, letter_to_find)
     results = []
     self.data[row].each_with_index do |letter, index|
-      results << index if letter == letter_to_find
+      if letter == letter_to_find
+        results << [row,index]
+      end
+      # results << index if letter == letter_to_find
     end
-    if !results.nil?
-      results
+    if !results.empty?
+      return results
     else
-      nil
+      return nil
     end
-  end  
-  # this should be used to find starting point, by row, for traversing.
-  # next we'd call all traversals on this index.
-
-  # do I need a variable like position = "5,2"
-  # which i would split at comma and send to data[5][2]?
-
-  def get_down_letter(row, column)
-    data[row+1][column]
   end
 
-
-  # def find_down(word_to_find)
-  #   "FQQ"
-  #   start = word[0]
-  #   # in each row of the puzzle, get_indexes_in_row(row, start)
-  #   step_down
-  # end
-
-  # def step_down(data)
-  #   # add 1 to data[index]
-  #   # return new absolute index
-  # end
+  # this should be used to find starting point, by row, for traversing.
+  # next we'd call all traversals on this index.
 
 end #end puzzle class
 
 class Traverse
-  attr_accessor :position
+  attr_accessor :position, :row, :col
 
-  def initialize(row,col)
-    @position = "#{row},#{col}"
+  # Traverse.new(a.get_indexes_in_row(1,"V").first)
+  # => #<Traverse:0x007fd97a845958 @row=1, @col=18>
+
+  def initialize(array)
+    @row = array[0]
+    @col = array[1]
   end
 
   def arrayify_position
-    [self.position.split(",").first.to_i, self.position.split(",").last.to_i]
+    [self.row, self.col]
   end
 
-  # I STOPPED RIGHT HERE
+  def all_traversals(length)
+    results = []
+    a_direction = []
 
-  def increment_row(arrayified_position)
-    
+    # results << 
+    # => nested array of positions
+  end
+
+  def row_down(length)
+    result = []
+    length.times do 
+      result << [self.row += 1, col]
+    end
+    length.times {self.row -= 1}
+    result
+  end
+
+  def row_up(length)
+    result = []
+    length.times do 
+      result << [self.row -= 1, col]
+    end
+    length.times {self.row += 1}
+    result
+  end
+
+  def col_right(length)
+    result = []
+    length.times do 
+      result << [row, self.col += 1]
+    end
+    length.times {self.col -= 1}
+    result
+  end
+
+  def col_left(length)
+    result = []
+    length.times do 
+      result << [row, self.col -= 1]
+    end
+    length.times {self.col += 1}
+    result
+  end
+
+  def down_right(length)
+    result = []
+    length.times do 
+      result << [self.row += 1, self.col += 1]
+    end
+    length.times do 
+      self.row -= 1
+      self.col -= 1
+    end
+    result
+  end
+
+  def up_right(length)
+    result = []
+    length.times do 
+      result << [self.row -= 1, self.col += 1]
+    end
+    length.times do 
+      self.row += 1
+      self.col -= 1
+    end
+    result
+  end
+
+  def down_left(length)
+    result = []
+    length.times do 
+      result << [self.row += 1, self.col -= 1]
+    end
+    length.times do 
+      self.row -= 1
+      self.col += 1
+    end
+    result
+  end
+
+  def up_left(length)
+    result = []
+    length.times do 
+      result << [self.row -= 1, self.col -= 1]
+    end
+    length.times do 
+      self.row += 1
+      self.col += 1
+    end
+    result
   end
 
 end
