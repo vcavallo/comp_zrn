@@ -56,8 +56,6 @@ class Puzzle
     words
   end
 
-  # data[row][col]
-
   def get_indexes_in_row(row, letter_to_find)
     results = []
     self.data[row].each_with_index do |letter, index|
@@ -73,10 +71,36 @@ class Puzzle
     end
   end
 
+  def search_word(word)
+    letter = word[0]
+    results = []
+    self.data.each_with_index do |row, index|
+      results << get_indexes_in_row(index, letter)
+    end
+    results.compact
+  end
+
   # this should be used to find starting point, by row, for traversing.
   # next we'd call all traversals on this index.
 
 end #end puzzle class
+
+class Search
+
+  attr_accessor :puzzle
+
+  def initialize(puzzle)
+    @puzzle = puzzle
+  end
+
+  def search_word(puzzle, word)
+    letter = word[0]
+    puzzle.data.each_with_index do |row, index|
+      get_indexes_in_row(index, letter)
+    end
+  end
+
+end
 
 class Traverse
   attr_accessor :position, :row, :col
@@ -89,16 +113,23 @@ class Traverse
     @col = array[1]
   end
 
-  def arrayify_position
-    [self.row, self.col]
-  end
+  # def arrayify_position
+  #   [self.row, self.col]
+  # end
 
   def all_traversals(length)
     results = []
-    a_direction = []
 
-    # results << 
-    # => nested array of positions
+    results << row_up(length)
+    results << up_right(length)
+    results << col_right(length)
+    results << down_right(length)
+    results << row_down(length)
+    results << down_left(length)
+    results << col_left(length)
+    results << up_left(length)
+
+    results
   end
 
   def row_down(length)
@@ -186,3 +217,13 @@ class Traverse
   end
 
 end
+
+puzzle = Puzzle.new("puzzle13.csv", "wordlist13.txt")
+# each row of the puzzle:
+puzzle.data.each do
+  # ? 
+end
+
+
+  # Traverse.new(a.get_indexes_in_row(1,"V").first)
+  # => #<Traverse:0x007fd97a845958 @row=1, @col=18>
