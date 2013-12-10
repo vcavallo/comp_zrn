@@ -62,7 +62,6 @@ class Puzzle
       if letter == letter_to_find
         results << [row,index]
       end
-      # results << index if letter == letter_to_find
     end
     if !results.empty?
       return results
@@ -71,17 +70,15 @@ class Puzzle
     end
   end
 
-  def search_word(word)
+  def search_word_in_row(word)
     letter = word[0]
     results = []
     self.data.each_with_index do |row, index|
       results << get_indexes_in_row(index, letter)
     end
-    results.compact
+    results.compact.collect {|result| result.flatten}
   end
 
-  # this should be used to find starting point, by row, for traversing.
-  # next we'd call all traversals on this index.
 
 end #end puzzle class
 
