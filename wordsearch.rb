@@ -79,6 +79,8 @@ class Puzzle
     results.compact.collect {|result| result.flatten}
   end
 
+  # this needs a method to convert from array of positions to letters. 
+  # better yet, just needs a method to convert from A Postion to A Letter.
 
 end #end puzzle class
 
@@ -114,7 +116,8 @@ class Traverse
   #   [self.row, self.col]
   # end
 
-  def all_traversals(length)
+  def all_traversals(word)
+    length = word.length
     results = []
 
     results << row_up(length)
@@ -215,11 +218,14 @@ class Traverse
 
 end
 
-puzzle = Puzzle.new("puzzle13.csv", "wordlist13.txt")
-# each row of the puzzle:
-puzzle.data.each do
-  # ? 
-end
+# puzzle = Puzzle.new("puzzle13.csv", "wordlist13.txt")
+# # each row of the puzzle:
+# puzzle.data.each do
+#   puzzle.search_word_in_row("VIRGINIA").each do |position|
+#     this = Traverse.new(position)
+#     traversals_to_words(this.all_traversals("VIRGINIA").first)
+#   end
+# end
 
 
   # Traverse.new(a.get_indexes_in_row(1,"V").first)
